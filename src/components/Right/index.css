@@ -1,16 +1,18 @@
 .right{
     width: 1000px;
-
+    margin-left: -0.5px;
 }
 .right .primary{
     display: inline-block;
 }
 .right li{
-    margin: 25px;
+    margin-left: 20px;
+    padding: 25px;
     display: flex;
     flex-direction:row;
-
+    border-bottom: 1px solid gray;
     justify-content:space-between;
+    margin-bottom: -1px;
 }
 .right .item{
     max-width: 600px;
@@ -20,8 +22,11 @@
     white-space: nowrap;
 
 }
-.right .item span{
+.right .item .time{
     color:gray;
     font-size: 14px;
+}
+.right .item .state {
+    color:green;
 
 }

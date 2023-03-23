@@ -3,17 +3,29 @@ import './index.css'
 import {Button} from "antd";
 class Index extends Component {
 
-
-
     render() {
+        const {todos} = this.props
         return (
             <div className="right">
                 <ul>
-                    <li>
-                        <div className="item">啦啦啦啦啦啦啦 <span>2022-2-2 20:20:20</span></div>
+                    {
+                        todos.map((item)=>{
+                            let done= {
+                                display:"none"
+                            };
+                            if(item.done===true){
+                                 done = {};
+                            }
+                            return <li  key={item.id}>
+                                <div className="item">{item.description} <span className="time">{item.time}</span> <span className="state" style={done}>√</span></div>
 
-                        <Button className="primary" danger>删除</Button>
-                    </li>
+                                <Button className="primary" danger>删除</Button>
+                            </li>
+                        })
+                    }
+
+
+
 
                 </ul>
 
