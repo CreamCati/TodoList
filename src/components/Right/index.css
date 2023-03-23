@@ -1,0 +1,27 @@
+.right{
+    width: 1000px;
+
+}
+.right .primary{
+    display: inline-block;
+}
+.right li{
+    margin: 25px;
+    display: flex;
+    flex-direction:row;
+
+    justify-content:space-between;
+}
+.right .item{
+    max-width: 600px;
+    font-size: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+.right .item span{
+    color:gray;
+    font-size: 14px;
+
+}

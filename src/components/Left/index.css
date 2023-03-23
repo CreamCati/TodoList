@@ -1,0 +1,24 @@
+.left{
+    width: 200px;
+    display: inline-block;
+    text-align: center;
+}
+
+.left ul Button{
+    font-size: 24px;
+    margin: 20px;
+
+}
+
+.left ul li{
+    border: 1px solid gray;
+    line-height: 74px;
+
+}
+.left ul li{
+
+    margin-bottom: -1px;
+}
+.left ul li:first-child{
+    border-right: 1px solid white;
+}
