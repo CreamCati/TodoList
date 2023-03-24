@@ -2,9 +2,7 @@
     width: 1000px;
     margin-left: -0.5px;
 }
-.right .primary{
-    display: inline-block;
-}
+
 .right li{
     padding: 5px;
     margin-left: 20px;
@@ -15,21 +13,25 @@
     margin-bottom: -1px;
 }
 .right .item{
+
+    display: inline-block;
     max-width: 600px;
     font-size: 22px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
+
 }
-.right .item{
-    padding: 15px;
+.right .bg-line{
+    display: flex;
+    align-items: center;
     background: linear-gradient(to right,white,gray) no-repeat right bottom;
     background-size: 0 2px;
     transition:  background-size .5s;
 }
 
-.right .item:hover{
+.right .bg-line:hover{
     background-size: 100% 2px;
 
     background-position-x: left;
@@ -37,16 +39,22 @@
 
 
 
-.right .item .time{
+.right  .time{
+    margin-left: 30px;
     color:gray;
     font-size: 14px;
+
 }
 .right .item .state {
     color:green;
 
 }
-
-.primary{
+.right .primary{
     margin: 5px;
+    display: inline-block;
 }
+.right .btns{
+    display: flex;
 
+    align-items: center;
+}

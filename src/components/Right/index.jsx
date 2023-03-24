@@ -36,11 +36,12 @@ class Right extends Component {
                                  done = {};
                             }
                             return <li  key={item.id}>
-                                <div className="item" onDoubleClick={this.handlerUpdate}>{item.description} <span className="time">{item.time}</span> <span className="state" style={done}>√</span></div>
-                                <div>
+                                <div className="bg-line" onDoubleClick={this.handlerUpdate}><div className="item">{item.description}</div> <span className="time">{item.time}</span> <span className="state" style={done}>√</span></div>
+                                <div className="btns">
                                     <Button className="primary" onClick={this.changeTodo(item.id)} style={{display:item.done?'none':''}}>完成</Button>
                                     <Button className="primary" danger onClick={()=>{this.delTodo(item.id)}}>删除</Button>
                                 </div>
+
                             </li>
                         })
                     }
