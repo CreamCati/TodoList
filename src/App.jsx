@@ -9,51 +9,82 @@ class App extends Component {
 
     state={
         todos:[
-            //{id:'10000001',description:'吃饭',time:'2000-2-2 20:20',done:true}
-        ]
+            {id:'10000001',description:'吃饭1',time:'2000-2-2 20:20',done:true},
+            {id:'10000002',description:'吃饭2',time:'2023-3-24 20:20',done:false},
+            {id:'10000003',description:'吃饭3',time:'2000-2-2 20:20',done:true}
+        ],
+        showTodos:[]
     }
-    post =(data)=>{
+    constructor(props) {
+        super(props);
+        this.state.showTodos=this.state.todos
+    }
+    postTodo =(data)=>{
         const {todos}=this.state
         let id
         if(todos.length===0){
-            data["id"]='10000001'
+            data["id"]=10000001
         }else{
             id=+todos[0].id+1
             data["id"]=id
         }
 
-
         const newTodos=[data,...todos]
-        this.setState({todos: newTodos})
+        this.setState({showTodos: newTodos,todos: newTodos})
+    }
+    changeTodo=(id)=>{
+        const {todos}=this.state
+        const newTodo = todos.map((item)=>{
+            if(item.id===id){
+                return {...item,done:true}
+            }else{
+                return item
+            }
+        })
+        this.setState({showTodos: newTodo,todos: newTodo})
+    }
+    deleteTodo=(id)=>{
+        const {todos}=this.state
+        const newTodo = todos.filter((item)=>{
+            return item.id!==id
+        })
+        this.setState({showTodos: newTodo,todos: newTodo})
+    }
+
+    showNowList=(date)=>{
+        const {todos}=this.state
+        const newTodo = todos.filter((item)=>{
+            return new Date(item.time).toLocaleDateString()===new Date(date).toLocaleDateString()
+        })
+        this.setState({showTodos: newTodo})
+
+    }
+    showDoneList=()=>{
+        const {todos}=this.state
+        const newTdo=todos.filter((item)=>{
+            return item.done===true
+        })
+
+        this.setState({showTodos: newTdo})
+    }
+    showAllList=()=>{
+        this.setState({showTodos: this.state.todos})
     }
     render() {
-        let {todos}=this.state
-        todos.sort((a,b)=>{
-            return b.id-a.id
-        })
-        if(todos.length===0){
-            return (
-                <div className="app_content">
-                    <div className="top"><Header post={this.post}/></div>
-                    <div className="content ">
-                        <div className="left"><Left/></div>
+        let {todos,showTodos}=this.state
 
-                    </div>
-                    <div className="clear"></div>
-                </div>
-            );
-        }
-        console.log("App",todos)
+
         return (
             <div className="app_content">
-                <div className="top"><Header post={this.post}/></div>
+                <div className="top"><Header postTodo={this.postTodo}/></div>
                 <div className="content ">
-                    <div className="left"><Left/></div>
-                    <div className="right" ><Right todos={todos}/></div>
+                    <Left showNowList={this.showNowList} showDoneList={this.showDoneList} showAllList={this.showAllList}/>
+                    <Right todos={todos} showTodos={showTodos} changeTodo={this.changeTodo} deleteTodo={this.deleteTodo}/>
                 </div>
                 <div className="clear"></div>
             </div>
         );
+
     }
 }
 

@@ -32,7 +32,7 @@ class Header extends Component {
         console.log()
         if(add.trim()!==''&&reg.test(time)){
 
-            this.props.post(data)
+            this.props.postTodo(data)
         }else{
             alert("未输入具体计划或未选择日期")
         }
