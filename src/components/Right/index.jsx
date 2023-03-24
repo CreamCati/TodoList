@@ -13,6 +13,9 @@ class Right extends Component {
             this.props.changeTodo(id)
         }
     }
+    handlerUpdate=()=> {
+        console.log("进行修改")
+    }
     render() {
         const {todos,showTodos} = this.props
         showTodos.sort((a,b)=>{
@@ -33,7 +36,7 @@ class Right extends Component {
                                  done = {};
                             }
                             return <li  key={item.id}>
-                                <div className="item">{item.description} <span className="time">{item.time}</span> <span className="state" style={done}>√</span></div>
+                                <div className="item" onDoubleClick={this.handlerUpdate}>{item.description} <span className="time">{item.time}</span> <span className="state" style={done}>√</span></div>
                                 <div>
                                     <Button className="primary" onClick={this.changeTodo(item.id)} style={{display:item.done?'none':''}}>完成</Button>
                                     <Button className="primary" danger onClick={()=>{this.delTodo(item.id)}}>删除</Button>
