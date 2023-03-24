@@ -3,12 +3,13 @@ import React, {Component} from 'react';
 import './App.css'
 import Header from "./components/Header";
 import Left from "./components/Left";
-import Right from  "./components/Right"
+import Right from "./components/Right"
 
 class App extends Component {
 
     state={
         todos:[
+            //测试数据
             {id:'10000001',description:'吃饭1',time:'2000-2-2 20:20',done:true},
             {id:'10000002',description:'吃饭2',time:'2023-3-24 20:20',done:false},
             {id:'10000003',description:'吃饭3',time:'2000-2-2 20:20',done:true}
@@ -17,16 +18,16 @@ class App extends Component {
     }
     constructor(props) {
         super(props);
+        this.state.todos=JSON.parse(localStorage.getItem("todos"))
         this.state.showTodos=this.state.todos
     }
     postTodo =(data)=>{
         const {todos}=this.state
-        let id
         if(todos.length===0){
             data["id"]=10000001
         }else{
-            id=+todos[0].id+1
-            data["id"]=id
+            const id_arr=todos.map(item=>item.id)
+            data["id"]=Math.max(...id_arr)
         }
 
         const newTodos=[data,...todos]
@@ -70,22 +71,34 @@ class App extends Component {
     showAllList=()=>{
         this.setState({showTodos: this.state.todos})
     }
+
+
+    updateTodo=()=>{
+        console.log("编辑")
+    }
+
+    save=()=>{
+        localStorage.setItem("todos",JSON.stringify(this.state.todos))
+        console.log()
+    }
     render() {
         let {todos,showTodos}=this.state
-
+        this.save()
 
         return (
             <div className="app_content">
                 <div className="top"><Header postTodo={this.postTodo}/></div>
                 <div className="content ">
                     <Left showNowList={this.showNowList} showDoneList={this.showDoneList} showAllList={this.showAllList}/>
-                    <Right todos={todos} showTodos={showTodos} changeTodo={this.changeTodo} deleteTodo={this.deleteTodo}/>
+                    <Right todos={todos} showTodos={showTodos} changeTodo={this.changeTodo} deleteTodo={this.deleteTodo} updateTodo={this.updateTodo}/>
+                    {/*<EditTodo/>*/}
                 </div>
                 <div className="clear"></div>
             </div>
         );
 
     }
+
 }
 
 export default App;

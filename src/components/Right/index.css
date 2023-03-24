@@ -45,9 +45,10 @@
     font-size: 14px;
 
 }
-.right .item .state {
+.right  .state {
     color:green;
-
+    font-size: 25px;
+    margin-left: 10px;
 }
 .right .primary{
     margin: 5px;
