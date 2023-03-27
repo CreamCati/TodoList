@@ -1,61 +1,106 @@
 .right{
-    width: 1000px;
-    margin-left: -0.5px;
+    width: 70%;
+    float: left;
+    margin: 10px;
 }
-
-.right li{
-    padding: 5px;
-    margin-left: 20px;
-    display: flex;
-    flex-direction:row;
+#title{
     border-bottom: 1px solid gray;
-    justify-content:space-between;
-    margin-bottom: -1px;
 }
 .right .item{
-
-    display: inline-block;
-    max-width: 600px;
-    font-size: 22px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-
-}
-.right .bg-line{
-    display: flex;
-    align-items: center;
-    background: linear-gradient(to right,white,gray) no-repeat right bottom;
+    width: 100%;
+    margin: 20px;
+    padding-bottom: 15px;
+    background: linear-gradient(to right,#EBEBEB,gray) no-repeat right bottom;
     background-size: 0 2px;
     transition:  background-size .5s;
 }
 
-.right .bg-line:hover{
+.right .item:hover{
     background-size: 100% 2px;
 
     background-position-x: left;
 }
-
-
-
-.right  .time{
-    margin-left: 30px;
-    color:gray;
-    font-size: 14px;
-
-}
-.right  .state {
-    color:green;
-    font-size: 25px;
-    margin-left: 10px;
-}
-.right .primary{
-    margin: 5px;
+.right  .content{
+    max-width: 400px;
     display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 24px;
 }
-.right .btns{
-    display: flex;
 
-    align-items: center;
+.right  span{
+    margin: 10px;
 }
+.right .time {
+    color: gray;
+    font-size: 14px;
+}
+.right .done{
+    color:green;
+    font-size: 24px;
+}
+
+.right  .btns{
+    display: inline-block;
+    float: right;
+
+}
+.right  button{
+    margin: 5px;
+}
+.right .bt_done{
+    background: #1677FF;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 10px;
+    transition: all 0.5s;
+}
+
+.right  .bt_done:hover{
+    background: #4096FF;
+    cursor: pointer;
+}
+
+.right  .bt_edit{
+    border: 1px solid skyblue;
+    padding: 10px 20px;
+    background: white;
+    border-radius: 10px;
+    margin: 1px;
+}
+
+.right  .bt_edit:hover{
+    border: 2px solid skyblue;
+    cursor: pointer;
+    margin: 0;
+}
+
+.right  .bt_del{
+    background: red;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 10px;
+    transition: all 0.5s;
+}
+
+.right  .bt_del:hover{
+    background: red;
+    cursor: pointer;
+}
+
+
+.right .edit_area{
+    border: 1px solid gray;
+    font-size: 24px;
+    width: 100%;
+    padding: 10px;
+    line-height: 48px;
+    height: 300px;
+    resize: none;
+}
+.right .time{
+    margin-left: 10px;
+    font-size: 16px;
+}
+

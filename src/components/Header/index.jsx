@@ -1,42 +1,42 @@
 import React, {Component} from 'react';
-import {Button, Input} from 'antd';
+import PubSub from 'pubsub-js'
 import './index.css'
 import Logo from './img/logo.jpg'
 
 class Header extends Component {
 
-    render() {
+    addTodo=()=>{
 
-        return (
-            <div className="header">
-                <div className="header_logo"><img  width='200px' srcSet={Logo} alt="111"></img></div>
-                <div className="header_add">
-                    <form action="">
-                        <Input ref={(c)=>{this.add=c}} type="text" name="add" id="add" placeholder="输入自己的计划" rootClassName="header_add_input" />
-                        <Input ref={(c)=>{this.time=c}} type="datetime-local" rootClassName="header_timepicker"/>
-                        <Button type="primary" onClick={this.addData}>添加</Button>
-                    </form>
-                </div>
-                <div className="clear"></div>
-            </div>
-        );
-    }
+        const plane=this.input.value
+        const time=this.time.value.replace("T"," ")
 
-    addData=()=>{
-        const add=this.add.input.value
-        const time = this.time.input.value.replace("T"," ")
+        if(time!==''&&plane!==''){
 
-        const data={description:add,time:time,done:false}
-
-        const reg=/^\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}/
-        console.log()
-        if(add.trim()!==''&&reg.test(time)){
-
-            this.props.postTodo(data)
+            const data={plane,time,done:false}
+            PubSub.publish('addTodo',data);
         }else{
             alert("未输入具体计划或未选择日期")
         }
 
+    }
+
+    render() {
+        return (
+            <div className="header">
+                <div className="">
+                    <img className="logo" src={Logo}/>
+                    <label>
+                        <input ref={(c)=>{this.input=c}} className="input" type="text" placeholder="输入自己的计划"/>
+                    </label>
+
+                    <label>
+                        <input ref={(c)=>{this.time=c}} className="date" type="datetime-local"/>
+                    </label>
+                    <button onClick={this.addTodo} className="add">添加</button>
+                </div>
+
+            </div>
+        );
     }
 }
 
