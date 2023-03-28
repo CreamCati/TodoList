@@ -21,12 +21,12 @@
     background-position-x: left;
 }
 .right  .content{
-    max-width: 400px;
+    max-width: 350px;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .right  span{
@@ -104,3 +104,9 @@
     font-size: 16px;
 }
 
+.right .group{
+    color:gray;
+    font-size: 14px;
+    width: 50px;
+    overflow: hidden;
+}

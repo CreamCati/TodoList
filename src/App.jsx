@@ -4,12 +4,31 @@ import Left from "./components/Left";
 import Right from "./components/Right";
 import './App.css'
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+
+        if(localStorage.getItem("groups")!==null){
+            this.state.groups=JSON.parse(localStorage.getItem("groups"))
+        }else{
+            this.state.groups=[{id:1,name:"默认分组"}]
+        }
+    }
+    state={
+        groups:[]
+    }
+
+    editGroup=(data)=>{
+
+        this.setState({groups:data})
+    }
+
     render() {
         return (
             <div className="container">
-                <Header/>
+                <Header groups={this.state.groups}/>
                 <Left/>
-                <Right/>
+                <Right  groups={this.state.groups} appAddGroups={this.addGroup} appDeleteGroup={this.addGroup} appEditGroup={this.editGroup}/>
             </div>
 
         );

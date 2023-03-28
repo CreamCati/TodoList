@@ -1,12 +1,13 @@
 .header{
 
-    line-height: 100px;
+    line-height: 80px;
     width: 1200px;
     margin:30px  auto;
     text-align: center;
 }
 .header .logo{
     float: left;
+    margin-top: 30px;
     height: 100px;
 }
 .header .logo:hover{
@@ -38,9 +39,34 @@
     color: white;
     border-radius: 10px;
     transition: all 0.5s;
+    margin-left: 50px;
 }
 
 .header .add:hover{
     background: #4096FF;
     cursor: pointer;
+}
+
+
+.header .group{
+    text-align: left;
+
+}
+.header select{
+    max-width: 150px;
+    max-height: 30px;
+    margin: 10px;
+}
+
+.bt_default{
+    border: 1px solid skyblue;
+    padding: 10px 20px;
+    background: white;
+    border-radius: 10px;
+    margin: 1px;
+}
+.bt_default:hover{
+    border: 2px solid skyblue;
+    cursor: pointer;
+    margin: 0;
 }
