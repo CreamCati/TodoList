@@ -21,7 +21,7 @@
     background-position-x: left;
 }
 .right  .content{
-    max-width: 350px;
+    max-width: 320px;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
