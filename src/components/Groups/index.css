@@ -1,13 +1,16 @@
-.groups{
+.groups {
     margin: 20px;
 }
-.groups input{
+
+.groups input {
     font-size: 18px;
 }
-.newGroup{
+
+.newGroup {
     font-size: 18px;
     border: 1px solid white;
 }
-.newGroup:hover{
+
+.newGroup:hover {
     border: 1px solid skyblue;
 }

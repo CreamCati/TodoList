@@ -1,37 +1,44 @@
-.header{
+.header {
     line-height: 80px;
     width: 1200px;
-    margin:30px  auto;
+    margin: 30px auto;
     text-align: center;
 }
-.header .logo{
+
+.header .logo {
     float: left;
     margin-top: 30px;
     height: 100px;
 }
-.header .logo:hover{
+
+.header .logo:hover {
     cursor: pointer;
 }
-.header .input{
+
+.header .input {
     border: 1px solid skyblue;
     padding: 15px;
     width: 500px;
     border-radius: 25px;
 }
-.header .date{
+
+.header .date {
     padding: 15px;
     transition: all 0.5s;
-    border:1px solid white;
-    border-bottom:1px solid gray;
+    border: 1px solid white;
+    border-bottom: 1px solid gray;
     margin: 5px;
 }
-.header .date:hover{
-    border:1px solid gray;
+
+.header .date:hover {
+    border: 1px solid gray;
 }
-.header .date:focus{
-    border:1px solid gray;
+
+.header .date:focus {
+    border: 1px solid gray;
 }
-.header .add{
+
+.header .add {
     background: #1677FF;
     padding: 10px 20px;
     color: white;
@@ -40,31 +47,56 @@
     margin-left: 50px;
 }
 
-.header .add:hover{
+.header .add:hover {
     background: #4096FF;
     cursor: pointer;
 }
 
-
-.header .group{
+.header .group {
     text-align: left;
+    display: flex;
+    align-items: center;
 
 }
-.header select{
+
+.header select {
     max-width: 150px;
     max-height: 30px;
     margin: 10px;
 }
 
-.bt_default{
+.bt_default {
     border: 1px solid skyblue;
     padding: 10px 20px;
     background: white;
     border-radius: 10px;
     margin: 1px;
 }
-.bt_default:hover{
+
+.bt_default:hover {
     border: 2px solid skyblue;
     cursor: pointer;
     margin: 0;
+}
+
+.selectColor {
+    width: 30px;
+    display: inline-block;
+    height: 30px;
+}
+
+.iconSelector:hover {
+    border-bottom: 1px solid gray;
+    cursor: pointer;
+}
+
+.header .resultIcon {
+
+    display: inline-block;
+    text-align: center;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    line-height: 20px;
+    border-radius: 50%;
 }

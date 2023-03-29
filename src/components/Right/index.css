@@ -1,100 +1,131 @@
-.right{
+.right {
     width: 70%;
     float: left;
     margin: 10px;
 }
-#title{
+
+#title {
     border-bottom: 1px solid gray;
 }
-.right .item{
+
+.right .item {
     position: relative;
     width: 100%;
     margin: 20px;
     padding-bottom: 15px;
-    background: linear-gradient(to right,#EBEBEB,gray) no-repeat right bottom;
+    background: linear-gradient(to right, #EBEBEB, gray) no-repeat right bottom;
     background-size: 0 2px;
-    transition:  background-size .5s;
+    transition: background-size .5s;
 }
-.right .item:hover{
+
+.right .item:hover {
     background-size: 100% 2px;
 
     background-position-x: left;
 }
-.right .content{
-    display: flex;
 
+.right .content {
+    display: flex;
     justify-items: center;
 }
-.right .content span{
-    line-height: 31px;
-    margin: 5px;
+
+.right .resultIcon {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 50%;
 }
-.right .plane{
+
+.right .content span {
+
+}
+
+.right .plane {
     max-width: 320px;
     font-size: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: 31px;
+    margin: 5px;
 }
 
-.right .time{
+.right .time {
     color: gray;
-
+    line-height: 31px;
+    margin: 5px;
 }
-.right .group{
-    color:gray;
+
+.right .group {
+    color: gray;
     font-size: 14px;
     width: 60px;
     overflow: hidden;
+    line-height: 31px;
+    margin: 5px;
 }
-.right .done{
-    color:green;
+
+.right .done {
+    color: green;
     font-size: 24px;
 }
-.right  .btns{
+
+.right .btns {
     position: absolute;
     float: right;
     right: 0;
     bottom: 7px;
 }
-.right  button{
+
+.right button {
     margin: 5px;
 }
-.right .bt_done{
+
+.right .bt_done {
     background: #1677FF;
     padding: 10px 20px;
     color: white;
     border-radius: 10px;
     transition: all 0.5s;
 }
-.right  .bt_done:hover{
+
+.right .bt_done:hover {
     background: #4096FF;
     cursor: pointer;
 }
-.right  .bt_edit{
+
+.right .bt_edit {
     border: 1px solid skyblue;
     padding: 10px 20px;
     background: white;
     border-radius: 10px;
     margin: 1px;
 }
-.right  .bt_edit:hover{
+
+.right .bt_edit:hover {
     border: 2px solid skyblue;
     cursor: pointer;
     margin: 0;
 }
-.right  .bt_del{
+
+.right .bt_del {
     background: red;
     padding: 10px 20px;
     color: white;
     border-radius: 10px;
     transition: all 0.5s;
 }
-.right  .bt_del:hover{
+
+.right .bt_del:hover {
     background: red;
     cursor: pointer;
 }
-.right .edit_area{
+
+.right .edit_area {
     border: 1px solid gray;
     font-size: 24px;
     width: 100%;

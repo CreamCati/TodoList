@@ -1,16 +1,19 @@
-*{
-    border:0;
+* {
+    border: 0;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-a{
+
+a {
     text-decoration: none;
 }
-li{
+
+li {
     list-style: none;
 }
-.container{
+
+.container {
     width: 1200px;
     margin: 0 auto;
 }
