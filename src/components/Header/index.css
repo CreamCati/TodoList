@@ -1,5 +1,4 @@
 .header{
-
     line-height: 80px;
     width: 1200px;
     margin:30px  auto;
@@ -27,7 +26,6 @@
     margin: 5px;
 }
 .header .date:hover{
-
     border:1px solid gray;
 }
 .header .date:focus{

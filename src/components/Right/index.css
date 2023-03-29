@@ -7,6 +7,7 @@
     border-bottom: 1px solid gray;
 }
 .right .item{
+    position: relative;
     width: 100%;
     margin: 20px;
     padding-bottom: 15px;
@@ -14,37 +15,47 @@
     background-size: 0 2px;
     transition:  background-size .5s;
 }
-
 .right .item:hover{
     background-size: 100% 2px;
 
     background-position-x: left;
 }
-.right  .content{
+.right .content{
+    display: flex;
+
+    justify-items: center;
+}
+.right .content span{
+    line-height: 31px;
+    margin: 5px;
+}
+.right .plane{
     max-width: 320px;
-    display: inline-block;
+    font-size: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 18px;
 }
 
-.right  span{
-    margin: 10px;
-}
-.right .time {
+.right .time{
     color: gray;
+
+}
+.right .group{
+    color:gray;
     font-size: 14px;
+    width: 60px;
+    overflow: hidden;
 }
 .right .done{
     color:green;
     font-size: 24px;
 }
-
 .right  .btns{
-    display: inline-block;
+    position: absolute;
     float: right;
-
+    right: 0;
+    bottom: 7px;
 }
 .right  button{
     margin: 5px;
@@ -56,12 +67,10 @@
     border-radius: 10px;
     transition: all 0.5s;
 }
-
 .right  .bt_done:hover{
     background: #4096FF;
     cursor: pointer;
 }
-
 .right  .bt_edit{
     border: 1px solid skyblue;
     padding: 10px 20px;
@@ -69,13 +78,11 @@
     border-radius: 10px;
     margin: 1px;
 }
-
 .right  .bt_edit:hover{
     border: 2px solid skyblue;
     cursor: pointer;
     margin: 0;
 }
-
 .right  .bt_del{
     background: red;
     padding: 10px 20px;
@@ -83,13 +90,10 @@
     border-radius: 10px;
     transition: all 0.5s;
 }
-
 .right  .bt_del:hover{
     background: red;
     cursor: pointer;
 }
-
-
 .right .edit_area{
     border: 1px solid gray;
     font-size: 24px;
@@ -98,15 +102,4 @@
     line-height: 48px;
     height: 300px;
     resize: none;
-}
-.right .time{
-    margin-left: 10px;
-    font-size: 16px;
-}
-
-.right .group{
-    color:gray;
-    font-size: 14px;
-    width: 50px;
-    overflow: hidden;
 }
