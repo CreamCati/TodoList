@@ -1,50 +1,20 @@
 import React, {Component} from 'react';
 import './index.css'
+import {Button} from "antd";
+import Item from "./Item";
 
 class Groups extends Component {
-    edit = (item, e) => {
-        const {groups} = this.props  //需要一个todos 更新数据中的归属组
-        let newName = e.target.previousSibling.value
-        const oldName=item.name
-        const id = item.id
 
-        if (oldName === newName.trim() || newName.trim() === "") {
-            newName = oldName
-            return;
-        }
-        if (newName.length >= 15) {
-            alert("名字太长啦！")
-            return
-        }
-        const newGroups = groups.map((item) => {
-            if (item.id === id) {
-                return {...item, name: newName}
-            } else {
-                return item
-            }
-        })
-        this.props.appEditGroups(newGroups)
-        localStorage.setItem("groups", JSON.stringify(newGroups))
-        alert("修改成功")
+    state = {
+        open: false
     }
 
-    deleteGroup = (id) => {
-        const {groups} = this.props
-        if (groups.length === 1) {
-            alert("只剩一个分组了不能再删了")
-            return;
-        }
-        if (!window.confirm('是否删除？')) {
-            return
-        }
-        const newGroups = groups.filter((item) => {
-            return item.id !== id
-        })
-        this.props.appEditGroups(newGroups)
-        localStorage.setItem("groups", JSON.stringify(newGroups))
+    updateGroup = (item) => {
+        this.props.appEditGroups(item)
+
     }
 
-    addGroup = () => {
+    addGroup = () => {   //待改进  id递增问题
         const {nameEle} = this
         const {groups} = this.props
         const name = nameEle.value.trim()
@@ -56,39 +26,43 @@ class Groups extends Component {
             alert("名字太长啦！")
             return
         }
+        if (groups.find((v) => {
+            return v.name === name
+        })) {
+            alert("已存在！")
+            return
+        }
         const id_arr = groups.map(item => item.id)
-        const group = {}
-        group.id = Math.max(...id_arr) + 1
-        group.name = name
+        const group = {
+            id: Math.max(...id_arr) + 1,
+            name: name,
+            currentIcon: 'smile',
+            currentColor: '#ffffff',
+            fontColor: '#000000',
+        }
         const newGroups = [...groups, group]
 
         this.props.appEditGroups(newGroups)
         localStorage.setItem("groups", JSON.stringify(newGroups))
-
         nameEle.value = ''
     }
 
+
     render() {
         const {groups} = this.props
+
         return (
             <div className="groups">
                 {
                     groups.map((item) => {
-                        return <div key={item.id}>
-                            <input className="input" type="text" defaultValue={item.name}/>
-                            <button onClick={(e) => {
-                                this.edit(item, e)
-                            }} className="bt_edit">完成
-                            </button>
-                            <button onClick={() => {
-                                this.deleteGroup(item.id)
-                            }} className="bt_del">删除
-                            </button>
-                        </div>
+                        return <Item item={item} key={item.id}
+                                     updateGroup={this.updateGroup}
+                                     groups={groups}
+                        />
                     })
                 }
                 <input ref={c => this.nameEle = c} className="newGroup" type="text" placeholder="此处添加新的分组"/>
-                <button className="bt_edit" onClick={this.addGroup}>添加新分组</button>
+                <Button onClick={this.addGroup}>添加新分组</Button>
             </div>
         );
     }

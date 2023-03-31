@@ -13,7 +13,15 @@ class App extends Component {
         if (localStorage.getItem("groups") !== null) {
             this.state.groups = JSON.parse(localStorage.getItem("groups"))
         } else {
-            this.state.groups = [{id: 1, name: "默认分组"}]
+            this.state.groups = [
+                {
+                    id: 1,
+                    name: "默认分组",
+                    currentIcon: 'smile',
+                    currentColor: '#ffffff',
+                    fontColor: '#000000',
+                }
+            ]
         }
     }
 
@@ -22,8 +30,9 @@ class App extends Component {
     }
 
     editGroup = (data) => {
-
         this.setState({groups: data})
+        localStorage.setItem("groups", JSON.stringify(data))
+
     }
 
     render() {

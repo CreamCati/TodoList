@@ -40,9 +40,6 @@
     border-radius: 50%;
 }
 
-.right .content span {
-
-}
 
 .right .plane {
     max-width: 320px;
@@ -61,10 +58,13 @@
 }
 
 .right .group {
+    display: inline-block;
     color: gray;
     font-size: 14px;
-    width: 60px;
+    width: 120px;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     line-height: 31px;
     margin: 5px;
 }
@@ -74,55 +74,8 @@
     font-size: 24px;
 }
 
-.right .btns {
-    position: absolute;
-    float: right;
-    right: 0;
-    bottom: 7px;
-}
-
-.right button {
+.right Button {
     margin: 5px;
-}
-
-.right .bt_done {
-    background: #1677FF;
-    padding: 10px 20px;
-    color: white;
-    border-radius: 10px;
-    transition: all 0.5s;
-}
-
-.right .bt_done:hover {
-    background: #4096FF;
-    cursor: pointer;
-}
-
-.right .bt_edit {
-    border: 1px solid skyblue;
-    padding: 10px 20px;
-    background: white;
-    border-radius: 10px;
-    margin: 1px;
-}
-
-.right .bt_edit:hover {
-    border: 2px solid skyblue;
-    cursor: pointer;
-    margin: 0;
-}
-
-.right .bt_del {
-    background: red;
-    padding: 10px 20px;
-    color: white;
-    border-radius: 10px;
-    transition: all 0.5s;
-}
-
-.right .bt_del:hover {
-    background: red;
-    cursor: pointer;
 }
 
 .right .edit_area {

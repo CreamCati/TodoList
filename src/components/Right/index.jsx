@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import PubSub from "pubsub-js"
 import './index.css'
 import Groups from "../Groups";
-import Icons from '../../globalData'
+import icons from "../../globalData";
+import {Button, Select} from "antd";
+
+const {Option} = Select
 
 class Right extends Component {
 
@@ -13,7 +16,8 @@ class Right extends Component {
         onMouse: false,
         manage: false,
         selectItem: '',
-        showType: {show: false, value: '默认分组'}
+        showType: {show: false, value: ''}, //下拉框选择类型  默认false  显示时显示全部数据  true时需要传递value（组名）
+        groups: []
 
     }
 
@@ -22,7 +26,7 @@ class Right extends Component {
         if (localStorage.getItem("todos") !== null) {
             this.state.todos = JSON.parse(localStorage.getItem("todos"))
         }
-        console.log()
+
         this.state.showTodos = this.state.todos
     }
 
@@ -61,6 +65,10 @@ class Right extends Component {
         PubSub.unsubscribe(this.token5)
     }
 
+    updateTodos = (newTodos) => {
+        console.log(newTodos)
+        this.setState({todos: newTodos,showTodos: newTodos})
+    }
     addTodo = (todo) => {
         const {todos} = this.state
 
@@ -81,7 +89,6 @@ class Right extends Component {
 
         const newTodo = showTodos.map((item) => {
             if (item.id === id) {
-
                 return {...item, done: !item.done}
             } else {
                 return item
@@ -103,15 +110,21 @@ class Right extends Component {
         this.setState({edit: {state: true, item}})
     }
     editTodo = (data) => {
+        //      计划         时间         组
         const {planeEle, newTimeEle, selectEle} = this
-        const {todos} = this.state
+        const {todos, groups} = this.state
+
+        //找出对应的组
+        const group = groups.find((v) => {
+            return v.name === selectEle.value
+        })
 
         const newTodo = todos.map((item) => {
             if (item.id === data.id) {
                 if (newTimeEle.value !== '') {
-                    return {...item, plane: planeEle.value, time: newTimeEle.value.replace("T", ' ')}
+                    return {...item, plane: planeEle.value, time: newTimeEle.value.replace("T", ' '),group: group.id}
                 } else {
-                    return {...item, plane: planeEle.value, group: selectEle.value}
+                    return {...item, plane: planeEle.value, group: group.id}
                 }
             } else {
                 return item
@@ -152,62 +165,61 @@ class Right extends Component {
 
     selectItem = (e) => {
         const {groups} = this.props
-        const index = e.target.selectedIndex - 1
+        const {todos} = this.state
 
-        // eslint-disable-next-line react/no-direct-mutation-state
-        if (index === -1) {
+        if (e === "全部") {
             this.setState({showType: {show: false, value: ''}})
             return
         }
 
-        const selectItem = groups[index].name
+        this.setState({showType: {show: true, value: e}})
+        //找出组id
+        const group = groups.find((v) => {
+            return v.name === e
+        })
 
-        this.setState({showType: {show: true, value: selectItem}})
-
-        // const {todos}=this.state
-        // const newTdo=todos.filter((item)=>{
-        //     console.log(item,selectItem)
-        //     return item.group===selectItem
-        // })
-        // console.log(newTdo)
-        // this.setState({showTodos: newTdo})
+        const newTdo = todos.filter((item) => {
+            return item.group === group.id
+        })
+        this.setState({showTodos: newTdo, showType: {show: true, value: group.id}})
 
     }
 
     render() {
         const {showTodos, edit, manage, showType} = this.state
         const {groups} = this.props
-        //console.log("manage",manage)
+        // eslint-disable-next-line react/no-direct-mutation-state
+        this.state.groups = groups
         return (
             <div className="right">
                 <div>
                     <span id="title">当前列表/所有</span>
-                    <div style={{display: manage ? 'none' : 'inline-block'}}>
-                        筛选：<select name="groups" onChange={e => this.selectItem(e)}>
-                        <option value="全部">全部</option>
-                        {
-                            groups.map((item) => {
-                                return <option key={item.id} value={item.name}>{item.name}</option>
-                            })
-                        }
-                    </select>
+                    <div style={{display: manage||edit.state ? 'none' : 'inline-block'}}>
+                        &nbsp;&nbsp;筛选：
+                        <Select defaultValue={"全部"} style={{width: "100px"}} name="groups" onChange={this.selectItem}>
+                            <Option value="全部">全部</Option>
+                            {
+                                groups.map((item) => {
+                                    return <Option key={item.id} value={item.name}>{item.name}</Option>
+                                })
+                            }
+                        </Select>
                     </div>
                 </div>
                 {
                     edit.state ?
                         (
                             <div>
-                                <textarea ref={(c) => {
-                                    this.planeEle = c
-                                }} className="edit_area" name="" id="" defaultValue={edit.item.plane}></textarea>
+                                <textarea ref={c => this.planeEle = c} className="edit_area"
+                                          defaultValue={edit.item.plane}></textarea>
                                 <div>该计划的时间为：<span>{edit.item.time}</span> <br/>
                                     点击修改新时间<input ref={(c) => {
                                         this.newTimeEle = c
                                     }} className="time" type="datetime-local"/>
-                                    <button onClick={() => {
+                                    <Button onClick={() => {
                                         this.editTodo(edit.item)
-                                    }} className="bt_done" style={{float: 'right'}}>完成
-                                    </button>
+                                    }} type={"primary"} style={{float: 'right'}}>完成
+                                    </Button>
                                     <div>
                                         归属分类：
                                         <select ref={(c) => {
@@ -225,46 +237,63 @@ class Right extends Component {
                         ) : manage ?
                             <Groups
                                 groups={groups}
+                                todos={this.state.todos}
+                                updateTodos={this.updateTodos}
                                 appAddGroups={this.props.appAddGroups}
                                 appEditGroups={this.props.appEditGroup}/>
                             :
-                            showTodos.filter((item) => {
-                                return showType.show ? item.group === showType.value : item
-                            }).sort((a, b) => {
-                                return new Date(b.time) - new Date(a.time)
-                            }).map((item) => {
-                                //console.log(item.icon.ele)
+                            //展示列表
+                            (
+                                showTodos.filter((item) => {  //是否需要按组显示
 
-                                return <div className="item" key={item.id} onMouseEnter={() => {
-                                    this.handlerMouse(true, item)
-                                }} onMouseLeave={() => {
-                                    this.handlerMouse(false, item)
-                                }}>
-                                    <div className="content">
+                                    return showType.show ? item.group === showType.value : item
+                                }).sort((a, b) => {  //时间降序
+                                    return new Date(b.time) - new Date(a.time)
+                                }).map((item) => {   //渲染
+                                    let groupName = groups.find((v) => {
+                                        return v.id === item.group
+                                    })
+                                    if (groupName === undefined) {
+                                        groupName = {
+                                            id: 0,
+                                            name: "无分组",
+                                            currentIcon: 'smile',
+                                            currentColor: '#ffffff',
+                                            fontColor: '#000000',
+                                        }
+                                    }
+                                    return <div className="item" key={item.id} onMouseEnter={() => {
+                                        this.handlerMouse(true, item)
+                                    }} onMouseLeave={() => {
+                                        this.handlerMouse(false, item)
+                                    }}>
+                                        <div className="content">
                                         <span className="resultIcon" style={{
-                                            background: item.icon.color,
-                                            color: item.icon.fontColor
-                                        }}>{Icons[item.icon.icon]}</span>
-                                        <span className="plane">{item.plane}</span>
-                                        <span className="time">{item.time}</span>
-                                        <span className="group">{item.group}</span>
-                                        <span className="done" style={{visibility: item.done ? '' : 'hidden'}}>√</span>
+                                            background: groupName.currentColor,
+                                            color: groupName.fontColor
+                                        }}>{icons[groupName.currentIcon]}</span>
+                                            <span className="plane">{item.plane}</span>
+                                            <span className="time">{item.time}</span>
+                                            <span className="group">{groupName.name}</span>
+                                            <span className="done" style={{visibility: item.done ? '' : 'hidden'}}>√</span>
+
+                                            <div style={{display: item.onMouse ? 'block' : 'none'}}>
+                                                <Button type={"default"} onClick={() => {
+                                                    this.edit(item)
+                                                }} style={{display: item.done ? 'none' : ''}}>编辑
+                                                </Button>
+                                                <Button onClick={() => {
+                                                    this.doneTodo(item.id)
+                                                }} type={"primary"}>{item.done ? '取消' : '完成'}</Button>
+                                                <Button onClick={() => {
+                                                    this.deleteTodo(item)
+                                                }} danger type={"primary"}>删除
+                                                </Button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="btns" style={{display: item.onMouse ? 'block' : 'none'}}>
-                                        <button onClick={() => {
-                                            this.edit(item)
-                                        }} className="bt_edit" style={{display: item.done ? 'none' : ''}}>编辑
-                                        </button>
-                                        <button onClick={() => {
-                                            this.doneTodo(item.id)
-                                        }} className="bt_done">{item.done ? '取消' : '完成'}</button>
-                                        <button onClick={() => {
-                                            this.deleteTodo(item)
-                                        }} className="bt_del">删除
-                                        </button>
-                                    </div>
-                                </div>
-                            })
+                                })
+                            )
                 }
             </div>
         )
