@@ -1,0 +1,24 @@
+.header {
+    background: #2564CF;
+    display: flex;
+}
+
+.title {
+    color: white;
+    display: inline-block;
+    font-weight: 600;
+    font-family: SegoeUI-SemiBold-final, Segoe UI Semibold, SegoeUI-Regular-final, Segoe UI, "Segoe UI Web (West European)", Segoe, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Tahoma, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 48px;
+    margin-left: 56px;
+}
+
+.search {
+    width: 80%;
+    text-align: center;
+    line-height: 48px;
+}
+
+.search .input {
+    width: 400px;
+}

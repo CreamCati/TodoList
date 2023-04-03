@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>容器充满屏幕，自适应剩余的高度</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      background: #e2e2e2;
+    }
+
+    .menus {
+      width: 160px;
+      height: 100%;
+      border-right: 1px solid #bbb;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .menuItem {
+      width: 130px;
+      height: 40px;
+      margin: 5px 0;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .container {
+      width: calc(100% - 160px);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      width: 100%;
+      min-height: 50px;
+      border-bottom: 1px solid #bbb;
+      box-sizing: border-box;
+      background: #f0d4b9;
+    }
+
+    .content {
+      width: 100%;
+      flex: 1;
+      position: relative;
+    }
+
+
+    .postion {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    .info1 {
+      width: 100%;
+      height: calc(100% - 80px);
+      background: #b9e5f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info2 {
+      width: 100%;
+      height: 80px;
+      background: #c4b9f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .footer{
+      width: 100%;
+      height: 50px;
+      border-top: 1px solid #bbb;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+<div class="menus">
+  <div class="menuItem" onclick="menuClick(this)">目录一</div>
+  <div class="menuItem" onclick="menuClick(this)">目录二</div>
+</div>
+<div class="container">
+  <div id="header" class="header"></div>
+  <!-- flex:1	使容器高度充满剩余高度 -->
+  <div class="content">
+    <!-- 优化：为防止出现内容超出容器情况，自适应容器中多嵌套一层 定位容器，保证内容在容器中显示 -->
+    <div class="postion">
+      <div class="info1">内容一</div>
+      <div class="info2">内容二</div>
+    </div>
+  </div>
+  <div class="footer">Footer部分</div>
+</div>
+<script>
+  function menuClick(evt) {
+    const title = evt.innerHTML
+    let inner = ''
+    switch (title) {
+      case "目录一":
+        for (let i = 0; i < 2; i++) {
+          inner += `<div>${title} 标题${i + 1}</div>`
+        }
+        break;
+      case "目录二":
+        for (let i = 0; i < 4; i++) {
+          inner += `<div>${title} 标题${i + 1}</div>`
+        }
+        break;
+    }
+    document.getElementById('header').innerHTML = inner
+  }
+</script>
+</body>
+
+</html>

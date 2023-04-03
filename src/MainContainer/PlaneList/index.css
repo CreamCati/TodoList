@@ -1,0 +1,48 @@
+.addTodo {
+    background: white;
+    border-radius: 25px;
+}
+
+.addTodo .btn_add {
+    float: right;
+    margin-left: 50px;
+}
+
+.addTodo .datePicker {
+    display: flex;
+    margin-top: 10px;
+    background: #FAF9F8;
+    border-bottom: 1px solid #D9D9D9;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.menu {
+    border: 1px solid #EEEEEE;
+    font-size: 16px;
+    background: white;
+    padding: 5px 2px;
+
+    cursor: default;
+}
+
+.menuItem {
+    padding: 10px 20px;
+}
+
+.menuItem:hover {
+    background: #F5F5F5;
+}
+
+.groups {
+    cursor: default;
+}
+
+.groups p {
+    padding: 10px;
+}
+
+.groups p:hover {
+    cursor: pointer;
+    background: #F4F4F4;
+}

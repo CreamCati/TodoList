@@ -1,0 +1,12 @@
+.edit {
+    width: 365px;
+    background: white;
+    border-left: 1px solid #E5E5E5;
+    box-shadow: -2px 0px 5px 2px rgba(229, 229, 229, 0.5);
+    padding: 25px;
+}
+
+.plane {
+    width: 80%;
+    border: none;
+}
