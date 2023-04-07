@@ -4,22 +4,25 @@ import ToDay from "./PlaneList";
 import './index.css'
 import TaskToolBar from "./TaskToolBar";
 import {MyContext} from "../App";
+import ManageGroup from "../ManageGroup";
 
 const MainContainer = () => {
-    const {groups, setGroups} = React.useContext(MyContext).groups
+    const {groups} = React.useContext(MyContext).groups
+
     return (
         <div className="mainContainer">
             <TaskToolBar/>
             <Switch>
-                <Route path='/myDay' component={ToDay}/>
-                <Route path='/all' component={ToDay}/>
-                <Route path='/done' component={ToDay}/>
+                <Route path='/home/myDay' component={ToDay}/>
+                <Route path='/home/all' component={ToDay}/>
+                <Route path='/home/done' component={ToDay}/>
                 {
                     groups.map((v) => {
-                        return <Route key={v.key} path={"/" + v.key} component={ToDay}/>
+                        return <Route key={v.key} path={"/home" + v.key} component={ToDay}/>
                     })
                 }
-                <Redirect to={"/"}/>
+                <Route path={'/manage'} component={ManageGroup}/>
+                <Redirect to={"/home"}/>
             </Switch>
         </div>
     );

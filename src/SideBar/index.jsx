@@ -1,14 +1,10 @@
 import React, {useState} from 'react';
-import {
-    CalendarOutlined,
-    StarOutlined,
-    FolderAddOutlined,
-    WalletOutlined
-} from '@ant-design/icons';
-import {Button, Form, Input, Menu} from 'antd';
-import {useHistory, useLocation, withRouter} from 'react-router-dom'
+import {Button, Form, Input, Menu, Popover} from 'antd';
+import {useHistory, withRouter} from 'react-router-dom'
 import './index.css'
 import {MyContext} from "../App";
+import {randKey} from "../utils";
+import icons from '../globalData'
 
 function getItem(label, key, icon, children, type) {
     return {
@@ -24,9 +20,9 @@ const items = [
     getItem(
         '事项', 'todo', null,
         [
-            getItem('今日任务', '/myDay', <WalletOutlined/>),
-            getItem('已完成', '/done', <StarOutlined/>),
-            getItem('所有任务', '/all', <CalendarOutlined/>)
+            getItem('今日任务', '/myDay', icons.wallet),
+            getItem('已完成', '/done', icons.star),
+            getItem('所有任务', '/all', icons.calendar)
         ],
         'group'
     ),
@@ -37,48 +33,62 @@ const items = [
     )
 ];
 
-function randKey() {
-    let result = ''
-    let length = 10
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-    const charactersLength = characters.length
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength))
-    }
-    return result
-}
 
 const SideBar = () => {
     const [defaultGroups, setDefaultGroups] = useState(items)
+    //icon是name，icons是图标组  icons[icon]
+    const [icon, setIcon] = useState("folder-add")
     const {groups, setGroups} = React.useContext(MyContext).groups
     const [form1] = Form.useForm()
     const history = useHistory();
 
     React.useEffect(() => {
         const children = groups.map((v) => {
-            return getItem(v.name, v.key, <CalendarOutlined/>)
+            return getItem(v.name, v.key, <span className={"icon"} style={{
+                backgroundColor: v.bgColor,
+                color: v.fontColor
+            }}>{icons[v.icon]}</span>)
         })
-        defaultGroups[1].children = [...defaultGroups[1].children, ...children]
+        defaultGroups[1].children = [...children]
         setDefaultGroups([...defaultGroups])
-    }, [])
+    }, [groups])
 
     function onFinish(e) {
-        const key = randKey()
-        const Routers = [...groups, {name: e.group, key: key}]
+        const key = '/' + randKey()
+        const Routers = [...groups, {name: e.group, key: key, icon: icon,bgColor:'',fontColor: ''}]
         const newGroup = [...defaultGroups]
 
-        newGroup[1].children = [...newGroup[1].children, getItem(e.group, key, <CalendarOutlined/>)]
+        newGroup[1].children = [...newGroup[1].children, getItem(e.group, key, icons[icon])]
         setDefaultGroups(newGroup)
         setGroups(Routers)
         form1.resetFields()
     }
 
     const onClick = (e) => {
-        const title = e.domEvent.target.innerHTML
-        const state = {title}
-        history.push({pathname: e.key, state});
-    };
+        const state = e.key
+        history.push({pathname: '/home' + e.key, state});
+        console.log('/home' + e.key)
+    }
+    const onManageClick = () => {
+        history.push('/manage');
+    }
 
+    function handleIconSelect(e) {
+        const iconName = e.target.dataset.icon
+        if (iconName) {
+            setIcon(iconName)
+        }
+    }
+
+    const iconsContent = (
+        <div>
+            {
+                Object.keys(icons).map((e) => {
+                    return <div onClick={handleIconSelect} className="iconSelector" key={e}>{icons[e]}</div>
+                })
+            }
+        </div>
+    )
     return (
         <div className="SideBar">
             <Menu
@@ -100,16 +110,23 @@ const SideBar = () => {
                     rules={[
                         {
                             required: true,
+                            message: '填个组名吧'
                         },
                     ]}
                 >
                     <Input placeholder="新建分组" suffix={
-                        <Button htmlType="submit"><FolderAddOutlined/></Button>
+                        <Popover
+                            content={iconsContent}
+                            trigger="hover"
+                            placement="bottom"
+                        >
+                            <Button htmlType="submit">{icons[icon]}</Button>
+                        </Popover>
                     }/>
                 </Form.Item>
             </Form>
+            <Button className={"btn"} type={"primary"} key={"/manage"} onClick={onManageClick}>管理分组</Button>
         </div>
-
     );
 };
 

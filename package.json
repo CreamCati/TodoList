@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "ahooks": "^3.7.6",
     "antd": "^5.3.3",
-    "moment": "^2.29.4",
+    "dayjs": "^1.11.7",
     "pubsub-js": "^1.9.4",
     "react": "^18.2.0",
     "react-contextmenu": "^2.14.0",

@@ -1,44 +1,105 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
 import './index.css'
-import {MyContext} from "../App";
-import {Checkbox, DatePicker, Input, TimePicker} from "antd";
-import moment from "moment";
+import {MyContext} from "../App"
+import dayjs from 'dayjs'
+import {Button, Checkbox, DatePicker, Input, Select, TimePicker} from "antd";
+import {CloseCircleOutlined} from "@ant-design/icons";
 
 const Edit = () => {
-    // const {show,setShow} = React.useContext(MyContext).editShow
-    // const {state,data} = show
-    // console.log(show.data)
-    // const [value, setValue] = useState(data.plane);
-    const [date, setDate] = useState(moment('2023-04-03', 'YYYY-MM-DD'))
-    const [time, setTime] = useState(moment('12:34:56', 'HH:mm:ss'))
-    // function handleCheckboxChange(e) {
-    //     console.log(e)
-    // }
+    const {groups} = React.useContext(MyContext).groups
+    const {todos, setTodos} = React.useContext(MyContext).todos
+    const {show, setShow} = React.useContext(MyContext).editShow
+
+    const group = groups.find((v) => {
+        return v.key === show.data.groupKey
+    })
+
+    let arr = show.data.time.split(" ")
+    const date = dayjs(arr[0], 'YYYY-MM-DD')
+    const time = dayjs(arr[1], 'HH:mm')
+    const [key, setKey] = useState(0)
+    React.useEffect(() => {
+        setKey(key + 1)
+        console.log(show.data.plane)
+    }, [todos, show])
+
+    let ckBox, plane, datePicker, timePicker, groupKey
+
+    function handleCheckboxChange(e) {
+        ckBox = e.target.checked
+    }
+
     function handleChangeDatePicker(date, dateString) {
-        setDate(date)
-        console.log(dateString)
+        datePicker = dateString
     }
 
     function handleChangeTimePicker(time, timeString) {
-        setTime(time)
-        console.log(timeString)
+        timePicker = timeString
     }
 
-    // function handleChange(event) {
-    //     setValue(event.target.value);
-    // }
+    function handleChangeSelect(e) {
+        groupKey = e
+    }
 
-    return (
-        // style={{display:state?'':'none'}}
-        <div className={"edit"}>
-            <div>
-                {/*<Checkbox className={"checkBox"} defaultChecked={data.done} name={data}  onChange={handleCheckboxChange}/>*/}
-                {/*<Input value={value} onChange={handleChange} rootClassName={"plane"}/>*/}
-                <DatePicker defaultValue={date} onChange={handleChangeDatePicker}/>
-                <TimePicker defaultValue={time} onChange={handleChangeTimePicker}/>
-            </div>
+    function handleChangeInput(e) {
+        plane = e.target.value
+    }
+
+    function closeA() {
+        setShow({state: false})
+    }
+
+    function onFinish() {
+        const t1 = datePicker ? datePicker : arr[0]
+        const t2 = timePicker ? timePicker : arr[1]
+        const data = {
+            id: show.data.id,
+            plane: plane ? plane : show.data.plane,
+            time: t1 + " " + t2,
+            groupKey: groupKey ? groupKey : show.data.groupKey,
+            done: ckBox ? ckBox : show.data.done
+        }
+        const newTodos = todos.map((v) => {
+            if (v.id === data.id) {
+                return data
+            } else {
+                return v
+            }
+        })
+        setTodos(newTodos)
+        setShow({state: false})
+    }
+
+    return (<div className={"edit"} style={{display: show.state ? '' : 'none'}} key={key}>
+        <p onClick={closeA}><CloseCircleOutlined className={"icon_close"}/></p>
+        <br/>
+        <div className={"item"}>
+            <Checkbox className={"checkBox"} defaultChecked={show.data.done} name={show.data}
+                      onChange={handleCheckboxChange}/>
+            <Input defaultValue={show.data.plane} onChange={handleChangeInput} className={"plane"}/>
         </div>
-    );
+        <div className={"item"}>
+            <span>修改时间：</span>
+            <DatePicker allowClear={false} className={"datePicker"} defaultValue={date}
+                        onChange={handleChangeDatePicker}/>
+            <TimePicker allowClear={false} className={"timePicker"} defaultValue={time} format={"HH:mm"}
+                        onChange={handleChangeTimePicker}/>
+        </div>
+        <div className={"item"}>
+            <span>移动分组：</span>
+            <Select
+                onChange={handleChangeSelect}
+                defaultValue={group ? group.name : '暂无分组'}
+                style={{width: 120}}
+                options={
+                    groups.map((v) => {
+                        return {value: v.key, label: v.name}
+                    })
+                }
+            />
+        </div>
+        <Button style={{margin: '10px 0 '}} type={"primary"} onClick={onFinish}>修改</Button>
+    </div>);
 };
 
 export default Edit;

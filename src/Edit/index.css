@@ -1,12 +1,51 @@
 .edit {
-    width: 365px;
+    width: 700px;
     background: white;
     border-left: 1px solid #E5E5E5;
-    box-shadow: -2px 0px 5px 2px rgba(229, 229, 229, 0.5);
+    box-shadow: -2px 0 5px 2px rgba(229, 229, 229, 0.5);
     padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.icon_close {
+    cursor: pointer;
+}
+
+.icon_close:hover {
+    color: red;
 }
 
 .plane {
     width: 80%;
     border: none;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.edit .datePicker {
+    width: 120px;
+}
+
+.edit .timePicker {
+    width: 80px;
+}
+
+.line1 {
+    display: flex;
+    align-items: center;
+}
+
+.edit .checkBox {
+    margin: 0 5px;
+}
+
+.edit .item {
+    padding: 5px;
+
+    border-radius: 5px;
+}
+
+.edit .item:hover {
+    background: #F5F5F5;
 }

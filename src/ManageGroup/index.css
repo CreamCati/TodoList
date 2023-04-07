@@ -1,0 +1,9 @@
+.manageGroup {
+    background: #FAF9F8;
+    width: 100%;
+    padding: 30px;
+}
+
+.manageGroup .edit {
+    width: 100%;
+}

@@ -1,14 +1,18 @@
 import React from 'react';
-import {Checkbox, Popover} from "antd";
+import {Checkbox} from "antd";
 import './index.css'
 import {MyContext} from "../../../App";
 
 const Item = (props) => {
     const {data} = props
-    const {groups, setGroups} = React.useContext(MyContext).groups
+    const {groups} = React.useContext(MyContext).groups
     const {todos, setTodos} = React.useContext(MyContext).todos
     const {setShow} = React.useContext(MyContext).editShow
     const date = new Date(data.time);
+
+    const group = groups.find((v) => {
+        return data.groupKey === v.key
+    })
 
     const formatter = new Intl.DateTimeFormat('zh-CN', {
         year: 'numeric',
@@ -22,9 +26,7 @@ const Item = (props) => {
 
     function handleCheckboxChange(e) {
         const data = e.target.name
-        const check = e.target.checked
-        console.log(groups)
-        data.done = check
+        data.done = e.target.checked
         const newTodos = todos.map((v) => {
             if (v.id === data.id) {
                 return data
@@ -33,11 +35,12 @@ const Item = (props) => {
             }
         })
         setTodos(newTodos)
-        console.log(data, check)
+
+        setShow({state: false})
     }
 
     function onPlaneClick(data) {
-        setShow({state: true, data: data})
+        setShow({state: true, data: {...data}})
     }
 
     return (
@@ -51,12 +54,10 @@ const Item = (props) => {
                 </div>
                 <div>
                     <div>{data.plane}</div>
-                    <div className={"date"}>{formatter.format(date)}&nbsp;{data.groupKey}</div>
+                    <div className={"date"}>{formatter.format(date)}&nbsp;{group ? group.name : ''}</div>
                 </div>
             </div>
         </div>
-
-
     );
 };
 
